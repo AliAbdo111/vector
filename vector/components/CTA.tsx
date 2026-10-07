@@ -5,7 +5,6 @@ import { Mail } from "lucide-react";
 import { site } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Reveal } from "./Reveal";
-import { useI18n } from "./I18nProvider";
 
 /** Converging vector lines that sweep slowly behind the CTA. */
 function VectorField() {
@@ -42,7 +41,6 @@ function VectorField() {
 }
 
 export function CTA() {
-  const { t } = useI18n();
   return (
     <section id="contact" aria-labelledby="cta-title" className="relative px-3 py-10 sm:px-6">
       <div className="noise relative isolate mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] border border-white/10 bg-ink-900 px-6 py-24 text-center sm:py-32 lg:py-40">
@@ -62,27 +60,27 @@ export function CTA() {
         <div aria-hidden className="bg-grid absolute inset-0 -z-10 opacity-30 mask-radial" />
 
         <Reveal className="relative mx-auto max-w-3xl">
-          <p className="eyebrow justify-center">{t.cta.eyebrow}</p>
+          <p className="eyebrow justify-center">Let&apos;s build</p>
           <h2 id="cta-title" className="h-display mt-6 text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-            {t.cta.title} <span className="text-gradient">{t.cta.titleAccent}</span>
+            Ready to move your brand <span className="text-gradient">forward?</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-zinc-300 sm:text-xl">
-            {t.cta.body}
+            Let&apos;s build a digital growth engine that actually delivers.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <ButtonLink href={`mailto:${site.email}?subject=${encodeURIComponent(t.cta.emailSubject)}`} size="lg" arrow>
-              {t.cta.button}
+            <ButtonLink href={`mailto:${site.email}?subject=New%20project%20enquiry`} size="lg" arrow>
+              Start a Conversation
             </ButtonLink>
             <a
               href={`mailto:${site.email}`}
               className="inline-flex items-center gap-2 text-sm text-zinc-300 underline-offset-4 transition-colors hover:text-white hover:underline"
             >
               <Mail aria-hidden className="h-4 w-4" />
-              <span dir="ltr">{site.email}</span>
+              {site.email}
             </a>
           </div>
           <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
-            {t.cta.replyNote}
+            Reply within one business day
           </p>
         </Reveal>
       </div>

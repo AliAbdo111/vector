@@ -2,12 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { useI18n } from "./I18nProvider";
+import { processSteps } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
 import { ease } from "./Reveal";
 
 export function Process() {
-  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 55%"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -23,24 +22,24 @@ export function Process() {
       <div className="container relative">
         <SectionHeader
           id="process-title"
-          eyebrow={t.process.eyebrow}
+          eyebrow="Process"
           align="center"
-          title={t.process.title}
-          description={t.process.description}
+          title="A clear path from insight to scale."
+          description="Five deliberate stages. One compounding system."
         />
 
         <div ref={ref} className="relative mt-20">
           {/* Desktop: horizontal track */}
           <div aria-hidden className="absolute left-0 right-0 top-[23px] hidden h-px bg-white/10 lg:block">
-            <motion.div style={{ scaleX }} className="h-full origin-left bg-gradient-to-r rtl:origin-right rtl:bg-gradient-to-l from-accent-500 via-violet-400 to-signal" />
+            <motion.div style={{ scaleX }} className="h-full origin-left bg-gradient-to-r from-accent-500 via-violet-400 to-signal" />
           </div>
           {/* Mobile/tablet: vertical track */}
-          <div aria-hidden className="absolute bottom-20 start-[23px] top-6 w-px bg-white/10 lg:hidden">
+          <div aria-hidden className="absolute bottom-20 left-[23px] top-6 w-px bg-white/10 lg:hidden">
             <motion.div style={{ scaleY: scaleX }} className="h-full w-full origin-top bg-gradient-to-b from-accent-500 via-violet-400 to-signal" />
           </div>
 
           <ol className="relative grid gap-0 lg:grid-cols-5 lg:gap-6">
-          {t.process.steps.map((step, i) => (
+          {processSteps.map((step, i) => (
             <motion.li
               key={step.title}
               initial={{ opacity: 0, y: 20 }}
@@ -54,7 +53,7 @@ export function Process() {
               </span>
               <div className="lg:mt-8">
                 <h3 className="text-xl font-semibold tracking-tight text-white">{step.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-zinc-400 lg:pe-4">{step.body}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-zinc-400 lg:pr-4">{step.body}</p>
               </div>
             </motion.li>
           ))}

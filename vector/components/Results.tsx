@@ -3,10 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import { Info } from "lucide-react";
-import type { Dictionary } from "@/lib/i18n/en";
-import { useI18n } from "./I18nProvider";
-
-type Stat = Dictionary["results"]["stats"][number];
+import { stats, type Stat } from "@/lib/content";
 import { Reveal, ease } from "./Reveal";
 
 function CountUp({ stat }: { stat: Stat }) {
@@ -32,7 +29,7 @@ function CountUp({ stat }: { stat: Stat }) {
   }, [inView, reduce, stat.value]);
 
   return (
-    <span ref={ref} dir="ltr" className="inline-block tabular-nums">
+    <span ref={ref} className="tabular-nums">
       {/* Screen readers get the final value immediately. */}
       <span className="sr-only">
         {stat.prefix}
@@ -92,41 +89,40 @@ function Sparkline({ points, delay }: { points: number[]; delay: number }) {
 }
 
 export function Results() {
-  const { t } = useI18n();
   return (
     <section
       aria-labelledby="results-title"
       className="relative overflow-hidden border-y border-white/[0.06] bg-ink-900 py-28 sm:py-36"
     >
       <div aria-hidden className="bg-dots absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,transparent,#000_30%,#000_70%,transparent)]" />
-      <div aria-hidden className="absolute -start-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-accent-500/10 blur-[120px]" />
+      <div aria-hidden className="absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-accent-500/10 blur-[120px]" />
 
       <div className="container relative">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
           <Reveal>
             <p className="eyebrow">
               <span aria-hidden className="h-px w-6 bg-accent-400/70" />
-              {t.results.eyebrow}
+              Results
             </p>
             <h2 id="results-title" className="h-display mt-5 text-4xl leading-[1.04] sm:text-5xl lg:text-6xl">
-              {t.results.title}
+              We measure growth in numbers.
             </h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-zinc-400">
-              {t.results.subtitle}
+              Beautiful campaigns are nice. Measurable business results are better.
             </p>
             <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/[0.06] px-3 py-1.5 text-xs text-amber-200/90">
               <Info aria-hidden className="h-3.5 w-3.5" />
-              {t.results.demoBadge}
+              Example / demo metrics for illustration
             </p>
           </Reveal>
 
           <dl className="grid grid-cols-1 border-t border-white/[0.08] sm:grid-cols-2">
-            {t.results.stats.map((stat, i) => (
+            {stats.map((stat, i) => (
               <Reveal
                 key={stat.label}
                 delay={i * 0.08}
                 className={`flex flex-col justify-between gap-6 border-b border-white/[0.08] py-8 sm:py-10 ${
-                  i % 2 === 0 ? "sm:border-e sm:pe-10" : "sm:ps-10"
+                  i % 2 === 0 ? "sm:border-r sm:pr-10" : "sm:pl-10"
                 }`}
               >
                 <dt className="order-2 flex items-end justify-between gap-4">

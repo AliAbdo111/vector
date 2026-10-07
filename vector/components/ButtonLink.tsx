@@ -39,7 +39,7 @@ export function ButtonLink({
       {arrow && (
         <ArrowRight
           aria-hidden
-          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1"
+          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
         />
       )}
     </a>

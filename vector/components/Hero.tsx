@@ -1,15 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useI18n } from "./I18nProvider";
+import { capabilities } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { HeroGraphic } from "./HeroGraphic";
 import { ease } from "./Reveal";
 
+const headline = ["We", "turn", "digital", "attention", "into", "measurable", "growth."];
+const accentWords = new Set(["measurable", "growth."]);
+
 export function Hero() {
-  const { t } = useI18n();
-  const { headline, accentCount, capabilities } = t.hero;
-  const accentFrom = headline.length - accentCount;
   return (
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36">
       {/* Background: grid, top glow, noise */}
@@ -32,7 +32,7 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-signal" />
               </span>
-              {t.hero.eyebrow}
+              Digital Growth Agency
             </motion.p>
 
             <h1
@@ -40,9 +40,9 @@ export function Hero() {
               className="h-display mt-7 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.4rem] xl:text-[4.9rem]"
             >
               {headline.map((word, i) => (
-                <span key={`${word}-${i}`} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+                <span key={word} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
                   <motion.span
-                    className={`inline-block ${i >= accentFrom ? "text-gradient" : ""}`}
+                    className={`inline-block ${accentWords.has(word) ? "text-gradient" : ""}`}
                     initial={{ y: "105%", opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.9, delay: 0.15 + i * 0.065, ease }}
@@ -60,7 +60,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.7, ease }}
               className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-zinc-400 sm:text-xl"
             >
-              {t.hero.subheadline}
+              Strategy, creative, and performance marketing engineered to help ambitious brands grow faster.
             </motion.p>
 
             <motion.div
@@ -70,10 +70,10 @@ export function Hero() {
               className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <ButtonLink href="#contact" size="lg" arrow>
-                {t.hero.primaryCta}
+                Start a Project
               </ButtonLink>
               <ButtonLink href="#work" size="lg" variant="secondary">
-                {t.hero.secondaryCta}
+                See Our Work
               </ButtonLink>
             </motion.div>
 
@@ -83,25 +83,25 @@ export function Hero() {
               transition={{ duration: 1, delay: 1.2 }}
               className="mt-10 flex items-center gap-3 text-sm text-zinc-500"
             >
-              <span aria-hidden className="flex shrink-0 -space-x-1.5 rtl:space-x-reverse">
+              <span aria-hidden className="flex -space-x-1.5">
                 {["from-accent-400 to-violet-500", "from-signal to-accent-500", "from-violet-400 to-accent-300"].map((g) => (
                   <span key={g} className={`h-6 w-6 rounded-full border-2 border-ink-950 bg-gradient-to-br ${g}`} />
                 ))}
               </span>
-              {t.hero.trust}
+              Trusted by ambitious brands, startups &amp; growing businesses
             </motion.p>
           </div>
 
-          <div className="relative -mx-4 sm:mx-0 lg:-me-8">
-            <HeroGraphic chips={t.hero.chips} />
+          <div className="relative -mx-4 sm:mx-0 lg:-mr-8">
+            <HeroGraphic />
           </div>
         </div>
       </div>
 
       {/* Capability ticker */}
       <div className="relative mt-16 border-y border-white/[0.06] bg-white/[0.015] py-5 sm:mt-20">
-        <h2 className="sr-only">{t.hero.capabilitiesHeading}</h2>
-        <div dir="ltr" className="mask-fade-x flex overflow-hidden">
+        <h2 className="sr-only">Capabilities</h2>
+        <div className="mask-fade-x flex overflow-hidden">
           <ul className="flex shrink-0 animate-marquee items-center gap-10 pr-10 motion-reduce:animate-none">
             {[...capabilities, ...capabilities].map((c, i) => (
               <li

@@ -141,7 +141,7 @@ function Chip({
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-500/15 text-accent-200">
           {icon}
         </span>
-        <span dir="auto" className="leading-tight">
+        <span className="leading-tight">
           <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">{label}</span>
           <span className="block text-sm font-semibold text-white">{value}</span>
         </span>
@@ -150,13 +150,11 @@ function Chip({
   );
 }
 
-type ChipCopy = { label: string; value: string };
-
-export function HeroGraphic({ chips }: { chips: { signal: ChipCopy; cpa: ChipCopy; growth: ChipCopy } }) {
+export function HeroGraphic() {
   const reduce = !!useReducedMotion();
 
   return (
-    <div aria-hidden dir="ltr" className="relative mx-auto aspect-square w-full max-w-[600px] select-none">
+    <div aria-hidden className="relative mx-auto aspect-square w-full max-w-[600px] select-none">
       {/* Ambient glow */}
       <div className="absolute inset-[12%] rounded-full bg-accent-500/25 blur-[90px]" />
       <div className="absolute right-[8%] top-[6%] h-40 w-40 rounded-full bg-violet-500/25 blur-[70px]" />
@@ -311,21 +309,24 @@ export function HeroGraphic({ chips }: { chips: { signal: ChipCopy; cpa: ChipCop
         className="left-[0%] top-[22%] sm:left-[2%]"
         delay={1.6}
         icon={<Activity className="h-4 w-4" />}
-        {...chips.signal}
+        label="Signal"
+        value="Intent ↑ 41%"
         reduce={reduce}
       />
       <Chip
         className="bottom-[10%] right-[0%] sm:right-[4%]"
         delay={2}
         icon={<Target className="h-4 w-4" />}
-        {...chips.cpa}
+        label="CPA"
+        value="−38% vs. target"
         reduce={reduce}
       />
       <Chip
         className="left-[22%] top-[1%] hidden sm:block"
         delay={2.6}
         icon={<ArrowUpRight className="h-4 w-4" />}
-        {...chips.growth}
+        label="Growth"
+        value="Scaling"
         reduce={reduce}
       />
     </div>

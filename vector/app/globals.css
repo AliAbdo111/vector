@@ -96,34 +96,6 @@
   }
 }
 
-/* Arabic: Geist's metric fallback (Arial) would otherwise catch Arabic glyphs first. */
-[dir="rtl"] body,
-[dir="rtl"] .font-sans {
-  font-family: var(--font-arabic), var(--font-latin), ui-sans-serif, system-ui, sans-serif;
-}
-
-[dir="rtl"] .font-mono {
-  font-family: var(--font-arabic), var(--font-mono), ui-monospace, monospace;
-}
-
-/* Arabic: letter-spacing breaks glyph joining, and the script needs taller lines. */
-[dir="rtl"] .h-display,
-[dir="rtl"] .eyebrow,
-[dir="rtl"] .tracking-tightest,
-[dir="rtl"] .font-mono {
-  letter-spacing: 0;
-}
-
-[dir="rtl"] .h-display {
-  line-height: 1.25;
-}
-
-/* Arabic glyphs read smaller than Latin caps at the same size. */
-[dir="rtl"] .eyebrow,
-[dir="rtl"] footer h2 {
-  font-size: 13px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

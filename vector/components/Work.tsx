@@ -2,11 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import type { Dictionary } from "@/lib/i18n/en";
-import { useI18n } from "./I18nProvider";
-
-type CaseStudy = Dictionary["work"]["cases"][number];
-type Mockups = Dictionary["work"]["mockups"];
+import { caseStudies, type CaseStudy } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
@@ -24,14 +20,14 @@ function Window({ children, className = "" }: { children: React.ReactNode; class
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
-        <span className="ms-3 h-2 w-24 rounded-full bg-white/[0.06]" />
+        <span className="ml-3 h-2 w-24 rounded-full bg-white/[0.06]" />
       </div>
       {children}
     </div>
   );
 }
 
-function CommerceVisual({ m }: { m: Mockups }) {
+function CommerceVisual() {
   const bars = [28, 34, 30, 42, 48, 46, 58, 66, 72, 84, 92];
   return (
     <div className="relative h-full w-full">
@@ -51,10 +47,10 @@ function CommerceVisual({ m }: { m: Mockups }) {
       <Window className="absolute bottom-[10%] right-[5%] w-[58%]">
         <div className="p-4">
           <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{m.revenue}</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">Revenue</span>
             <span className="text-xs font-semibold text-signal">▲ 184%</span>
           </div>
-          <div dir="ltr" className="mt-3 flex h-20 items-end gap-1">
+          <div className="mt-3 flex h-20 items-end gap-1">
             {bars.map((b, i) => (
               <motion.span
                 key={i}
@@ -69,14 +65,19 @@ function CommerceVisual({ m }: { m: Mockups }) {
         </div>
       </Window>
       <div className="glass absolute right-[10%] top-[8%] rounded-full px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-zinc-300">
-        {m.checkout} <span className="text-signal">+52%</span>
+        Checkout CVR <span className="text-signal">+52%</span>
       </div>
     </div>
   );
 }
 
-function SaasVisual({ m }: { m: Mockups }) {
-  const channels = [88, 64, 76, 46].map((w, i) => ({ label: m.channels[i], w }));
+function SaasVisual() {
+  const channels = [
+    { label: "Search", w: 88 },
+    { label: "Social", w: 64 },
+    { label: "Landing", w: 76 },
+    { label: "Retarget", w: 46 },
+  ];
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <svg viewBox="0 0 200 200" className="absolute h-[78%] opacity-80" aria-hidden>
@@ -107,12 +108,12 @@ function SaasVisual({ m }: { m: Mockups }) {
       <Window className="relative w-[70%]">
         <div className="space-y-3 p-4">
           <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{m.roasByChannel}</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">ROAS by channel</span>
             <span className="text-sm font-semibold text-white">3.4x</span>
           </div>
           {channels.map((c, i) => (
             <div key={c.label} className="flex items-center gap-3">
-              <span className="w-16 truncate text-[10px] text-zinc-500">{c.label}</span>
+              <span className="w-14 text-[10px] text-zinc-500">{c.label}</span>
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.05]">
                 <motion.div
                   className="h-full rounded-full bg-gradient-to-r from-accent-500 to-violet-400"
@@ -130,14 +131,14 @@ function SaasVisual({ m }: { m: Mockups }) {
   );
 }
 
-function OrganicVisual({ m }: { m: Mockups }) {
+function OrganicVisual() {
   const line = "M0,92 C30,90 40,80 70,78 C100,76 110,60 140,56 C170,52 180,34 210,28 C240,22 260,10 300,6";
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <Window className="w-[82%]">
         <div className="p-4">
           <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{m.organicSessions}</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">Organic sessions</span>
             <span className="text-xs font-semibold text-signal">▲ 126%</span>
           </div>
           <svg viewBox="0 0 300 100" className="mt-3 h-24 w-full overflow-visible" preserveAspectRatio="none" aria-hidden>
@@ -164,7 +165,11 @@ function OrganicVisual({ m }: { m: Mockups }) {
             />
           </svg>
           <ul className="mt-4 space-y-2">
-            {m.keywords.map((k, i) => [k, `#${i + 1}`]).map(([k, r]) => (
+            {[
+              ["category keyword", "#1"],
+              ["long-tail guide", "#2"],
+              ["comparison query", "#3"],
+            ].map(([k, r]) => (
               <li key={k} className="flex items-center justify-between rounded-md bg-white/[0.03] px-2.5 py-1.5 text-[10px]">
                 <span className="text-zinc-400">{k}</span>
                 <span className="font-mono text-violet-400">{r}</span>
@@ -187,7 +192,6 @@ const glows = {
 /* ------------------------------------------------------------------ */
 
 function CaseCard({ study, featured }: { study: CaseStudy; featured?: boolean }) {
-  const { t } = useI18n();
   const Visual = visuals[study.visual];
   return (
     <article
@@ -197,20 +201,17 @@ function CaseCard({ study, featured }: { study: CaseStudy; featured?: boolean })
     >
       <div
         className={`relative overflow-hidden border-white/[0.06] ${
-          featured ? "aspect-[4/3] border-b lg:order-2 lg:aspect-auto lg:min-h-[460px] lg:w-[56%] lg:border-b-0 lg:border-s" : "aspect-[4/3] border-b"
+          featured ? "aspect-[4/3] border-b lg:order-2 lg:aspect-auto lg:min-h-[460px] lg:w-[56%] lg:border-b-0 lg:border-l" : "aspect-[4/3] border-b"
         }`}
       >
         <div aria-hidden className={`absolute inset-0 bg-gradient-to-br ${glows[study.visual]} to-transparent`} />
         <div aria-hidden className="bg-grid absolute inset-0 opacity-40 [background-size:32px_32px]" />
         <div
           role="img"
-          aria-label={t.work.illustrationLabel
-            .replace("{sector}", study.sector)
-            .replace("{metric}", study.metric)
-            .replace("{label}", study.metricLabel)}
+          aria-label={`Abstract illustration of ${study.sector.toLowerCase()} performance: ${study.metric} ${study.metricLabel}`}
           className="absolute inset-0 transition-transform duration-700 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.03] motion-reduce:transform-none"
         >
-          <Visual m={t.work.mockups} />
+          <Visual />
         </div>
       </div>
 
@@ -225,21 +226,21 @@ function CaseCard({ study, featured }: { study: CaseStudy; featured?: boolean })
 
         <div className="mt-8">
           <p className="flex items-baseline gap-3">
-            <span dir="ltr" className={`font-semibold tracking-tightest text-gradient-accent ${featured ? "text-6xl sm:text-7xl" : "text-5xl"}`}>
+            <span className={`font-semibold tracking-tightest text-gradient-accent ${featured ? "text-6xl sm:text-7xl" : "text-5xl"}`}>
               {study.metric}
             </span>
             <span className="text-sm text-zinc-400">{study.metricLabel}</span>
           </p>
           <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/[0.06] pt-5">
             <p className="text-sm text-zinc-500">
-              <span className="sr-only">{t.work.servicesLabel} </span>
+              <span className="sr-only">Services: </span>
               {study.services.join(" · ")}
             </p>
             <span
               aria-hidden
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-white transition-all duration-300 group-hover:border-transparent group-hover:bg-white group-hover:text-ink-950"
             >
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45 rtl:-scale-x-100 rtl:group-hover:-rotate-45" />
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
             </span>
           </div>
         </div>
@@ -249,16 +250,15 @@ function CaseCard({ study, featured }: { study: CaseStudy; featured?: boolean })
 }
 
 export function Work() {
-  const { t } = useI18n();
-  const [first, ...rest] = t.work.cases;
+  const [first, ...rest] = caseStudies;
   return (
     <section id="work" aria-labelledby="work-title" className="relative py-28 sm:py-36">
       <div className="container">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <SectionHeader id="work-title" eyebrow={t.work.eyebrow} title={t.work.title} />
+          <SectionHeader id="work-title" eyebrow="Featured Work" title="Work that moves the needle." />
           <Reveal>
             <ButtonLink href="#contact" variant="secondary" arrow>
-              {t.work.viewAll}
+              View All Work
             </ButtonLink>
           </Reveal>
         </div>
@@ -274,7 +274,7 @@ export function Work() {
           ))}
         </div>
         <p className="mt-6 text-xs text-zinc-600">
-          {t.work.disclaimer}
+          Case studies shown are illustrative examples. Client names withheld; figures are demo data.
         </p>
       </div>
     </section>

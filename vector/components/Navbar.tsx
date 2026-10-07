@@ -3,15 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
-import { site } from "@/lib/content";
-import { useI18n } from "./I18nProvider";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { navLinks, site } from "@/lib/content";
 import { Logo } from "./Logo";
 import { ease } from "./Reveal";
 
 export function Navbar() {
-  const { t } = useI18n();
-  const navLinks = t.nav.links;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -60,14 +56,14 @@ export function Navbar() {
         }`}
       >
         <nav
-          aria-label={t.nav.primaryLabel}
+          aria-label="Primary"
           className={`flex h-16 items-center justify-between rounded-2xl border px-5 transition-all duration-500 sm:px-6 ${
             scrolled || open
               ? "border-white/[0.08] bg-ink-900/70 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl"
               : "border-transparent bg-transparent"
           }`}
         >
-          <a href="#top" aria-label={`${site.name} — ${t.common.home}`} className="rounded-lg">
+          <a href="#top" aria-label={`${site.name} — home`} className="rounded-lg">
             <Logo />
           </a>
 
@@ -85,13 +81,12 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <LanguageSwitcher />
             <a
               href="#contact"
               className="group hidden h-9 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-medium text-ink-950 transition-all hover:shadow-[0_6px_24px_-4px_rgba(91,108,255,0.7)] md:inline-flex"
             >
-              {t.nav.cta}
-              <ArrowRight aria-hidden className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
+              Let&apos;s Talk
+              <ArrowRight aria-hidden className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
             <button
               ref={toggleRef}
@@ -99,7 +94,7 @@ export function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
+              aria-label={open ? "Close menu" : "Open menu"}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white md:hidden"
             >
               <AnimatePresence initial={false} mode="wait">
@@ -132,8 +127,8 @@ export function Navbar() {
                 {navLinks.map((link, i) => (
                   <motion.li
                     key={link.href}
-                    initial={{ opacity: 0, x: 0, y: -4 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.04 * i + 0.05, duration: 0.3 }}
                   >
                     <a
@@ -152,7 +147,7 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className="mt-2 flex h-12 items-center justify-center gap-2 rounded-xl bg-white font-medium text-ink-950"
               >
-                {t.nav.cta} <ArrowRight aria-hidden className="h-4 w-4 rtl:-scale-x-100" />
+                Let&apos;s Talk <ArrowRight aria-hidden className="h-4 w-4" />
               </a>
             </motion.div>
           )}

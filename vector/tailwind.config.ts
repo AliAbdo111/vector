@@ -31,8 +31,8 @@ const config: Config = {
         signal: "#2EE6C5",
       },
       fontFamily: {
-        sans: ["var(--font-latin)", "var(--font-arabic)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "var(--font-arabic)", "ui-monospace", "monospace"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       letterSpacing: {
         tightest: "-0.045em",

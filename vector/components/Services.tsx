@@ -2,18 +2,12 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { BarChart3, Gauge, LayoutTemplate, Megaphone, PenTool, Search } from "lucide-react";
-import type { Dictionary } from "@/lib/i18n/en";
-import { useI18n } from "./I18nProvider";
+import { services, type Service } from "@/lib/content";
 import { SectionHeader } from "./SectionHeader";
 import { staggerChild, staggerParent } from "./Reveal";
 
-type Service = Dictionary["services"]["items"][number];
-
-const icons = [Gauge, Search, Megaphone, PenTool, LayoutTemplate, BarChart3];
-
-function ServiceCard({ service, index, suffix }: { service: Service; index: number; suffix: string }) {
-  const Icon = icons[index];
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const Icon = service.icon;
 
   // Track the pointer so a soft spotlight follows it across the card.
   const onMove = (e: React.PointerEvent<HTMLElement>) => {
@@ -50,12 +44,12 @@ function ServiceCard({ service, index, suffix }: { service: Service; index: numb
         {service.title}
         <ArrowUpRight
           aria-hidden
-          className="h-4 w-4 -translate-x-1 translate-y-1 text-accent-300 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 rtl:-scale-x-100 rtl:translate-x-1"
+          className="h-4 w-4 -translate-x-1 translate-y-1 text-accent-300 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
         />
       </h3>
       <p className="mt-2 text-[15px] leading-relaxed text-zinc-400">{service.description}</p>
 
-      <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${service.title} ${suffix}`}>
+      <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${service.title} capabilities`}>
         {service.items.map((item) => (
           <li
             key={item}
@@ -70,22 +64,22 @@ function ServiceCard({ service, index, suffix }: { service: Service; index: numb
 }
 
 export function Services() {
-  const { t } = useI18n();
   return (
     <section id="services" aria-labelledby="services-title" className="relative py-28 sm:py-36">
       <div className="container">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeader
             id="services-title"
-            eyebrow={t.services.eyebrow}
+            eyebrow="Services"
             title={
               <>
-                {t.services.title} <span className="text-gradient">{t.services.titleAccent}</span>
+                Everything you need to <span className="text-gradient">grow digitally.</span>
               </>
             }
           />
           <p className="max-w-sm text-pretty text-zinc-400 lg:pb-2">
-            {t.services.intro}
+            One senior team across strategy, media, creative and technology — so every channel pulls in the same
+            direction.
           </p>
         </div>
 
@@ -96,8 +90,8 @@ export function Services() {
           viewport={{ once: true, margin: "0px 0px -10% 0px" }}
           className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-white/[0.07] bg-white/[0.07] sm:grid-cols-2 lg:grid-cols-3"
         >
-          {t.services.items.map((s, i) => (
-            <ServiceCard key={s.title} service={s} index={i} suffix={t.services.capabilitiesSuffix} />
+          {services.map((s, i) => (
+            <ServiceCard key={s.title} service={s} index={i} />
           ))}
         </motion.div>
       </div>

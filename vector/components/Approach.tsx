@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useI18n } from "./I18nProvider";
+import { principles } from "@/lib/content";
 import { Reveal, ease } from "./Reveal";
 
 export function Approach() {
-  const { t } = useI18n();
   return (
     <section id="about" aria-labelledby="about-title" className="relative py-28 sm:py-36">
       <div className="container">
@@ -14,19 +13,20 @@ export function Approach() {
             <Reveal>
               <p className="eyebrow">
                 <span aria-hidden className="h-px w-6 bg-accent-400/70" />
-                {t.approach.eyebrow}
+                Why VECTOR
               </p>
               <h2 id="about-title" className="h-display mt-5 text-4xl leading-[1.04] sm:text-5xl lg:text-6xl">
-                {t.approach.title} <span className="text-gradient">{t.approach.titleAccent}</span>
+                Marketing without the <span className="text-gradient">guesswork.</span>
               </h2>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-zinc-400">
-                {t.approach.body}
+                A vector has two properties: magnitude and direction. We bring both — creative force, pointed precisely
+                at the outcomes that matter to your business.
               </p>
             </Reveal>
 
             {/* Precision × Creativity × Technology × Growth */}
             <Reveal delay={0.15} className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-zinc-500">
-              {t.approach.pillars.map((w, i) => (
+              {["Precision", "Creativity", "Technology", "Growth"].map((w, i) => (
                 <span key={w} className="flex items-center gap-3">
                   {i > 0 && <span aria-hidden className="text-accent-400">×</span>}
                   <span className="text-zinc-300">{w}</span>
@@ -36,7 +36,7 @@ export function Approach() {
           </div>
 
           <ol className="border-t border-white/[0.08]">
-            {t.approach.principles.map((p, i) => (
+            {principles.map((p, i) => (
               <motion.li
                 key={p.title}
                 initial={{ opacity: 0, y: 24 }}
@@ -48,11 +48,11 @@ export function Approach() {
                 {/* Accent line that sweeps in on hover */}
                 <span
                   aria-hidden
-                  className="absolute -bottom-px start-0 h-px w-0 bg-gradient-to-r rtl:bg-gradient-to-l from-accent-400 to-violet-400 transition-all duration-700 group-hover:w-full"
+                  className="absolute -bottom-px left-0 h-px w-0 bg-gradient-to-r from-accent-400 to-violet-400 transition-all duration-700 group-hover:w-full"
                 />
                 <span className="font-mono text-sm text-accent-300 sm:pt-2">0{i + 1}</span>
                 <div>
-                  <h3 className="text-2xl font-semibold tracking-tight text-white transition-transform duration-500 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 sm:text-3xl">
+                  <h3 className="text-2xl font-semibold tracking-tight text-white transition-transform duration-500 group-hover:translate-x-1 sm:text-3xl">
                     {p.title}
                   </h3>
                   <p className="mt-3 max-w-md text-lg leading-relaxed text-zinc-400">{p.body}</p>
