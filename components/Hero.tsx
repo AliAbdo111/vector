@@ -11,7 +11,7 @@ export function Hero() {
   const { headline, accentCount, capabilities } = t.hero;
   const accentFrom = headline.length - accentCount;
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+    <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-20">
       {/* Background: grid, top glow, noise */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="bg-grid mask-radial absolute inset-0 opacity-70" />
